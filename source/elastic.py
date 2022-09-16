@@ -1,9 +1,10 @@
 from unittest import result
 from elasticsearch import Elasticsearch, helpers, exceptions
 import time
+from source.settings import ES
 
 
-es = Elasticsearch("http://127.0.0.1:9200/")
+
 
 # загрузка пачкой 
 def load_el_bulk(data_processed):
@@ -11,7 +12,7 @@ def load_el_bulk(data_processed):
         t = 0.1
         for _ in range(100):
             try:
-                result = helpers.bulk(es, data_processed)
+                result = helpers.bulk(ES, data_processed)
                 return result
             except exceptions.ConnectionError:
                 time.sleep(t)

@@ -2,22 +2,16 @@ import psycopg2
 import os
 import time
 from psycopg2.extras import execute_batch, DictCursor
+from source.settings import DSN
 
-dsn = {
-    'dbname': 'movies_database',
-    'user': 'app',
-    'password': '123',
-    'host': 'localhost',
-    'port': 5432,
-    'options': '-c search_path=content',
-}
+
 # функция выгрузки данных из pSQL
 def psql_unload(req):
     try:
         t = 0.1
         for _ in range(100):
             try:
-                with psycopg2.connect(**dsn, cursor_factory=DictCursor) as conn, conn.cursor(cursor_factory=DictCursor) as cur:
+                with psycopg2.connect(**DSN, cursor_factory=DictCursor) as conn, conn.cursor(cursor_factory=DictCursor) as cur:
                     cur.execute(req)
                     p = cur.fetchall()
                     return p
@@ -38,7 +32,7 @@ def psql_up(req):
             print(t)
             print(q)
             try:
-                with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
+                with psycopg2.connect(**DSN) as conn, conn.cursor() as cur:
                     cur.execute(req)
                     if cur.rowcount:
                         return True

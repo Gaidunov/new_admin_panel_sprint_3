@@ -4,3 +4,4 @@ psycopg2.extras
 loguru
 pydantic
 schedule
+python-dotenv
